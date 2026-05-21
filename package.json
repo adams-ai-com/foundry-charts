@@ -1,0 +1,11 @@
+{
+  "name": "foundry-charts-monorepo",
+  "private": true,
+  "workspaces": ["lib", "docs"],
+  "scripts": {
+    "dev": "npm run dev --workspace=docs",
+    "build:lib": "npm run build --workspace=lib",
+    "build:docs": "npm run build --workspace=docs",
+    "typecheck": "npm run typecheck --workspace=lib && npm run typecheck --workspace=docs"
+  }
+}

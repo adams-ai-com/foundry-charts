@@ -1,0 +1,38 @@
+{
+  "name": "foundry-charts",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/foundry-charts.cjs",
+  "module": "./dist/foundry-charts.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/foundry-charts.js",
+      "require": "./dist/foundry-charts.cjs"
+    },
+    "./styles": "./dist/style.css"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "d3": "^7.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "d3": "^7.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.9.1"
+  }
+}
