@@ -110,10 +110,10 @@ export function BarChart({
     ? d3.stack<Record<string, string | number>>().keys(series.map((s) => s.key))(data)
     : null
 
-  const handleMouseLeave = useCallback(() => setTooltip(null), [])
+  const handlePointerLeave = useCallback(() => setTooltip(null), [])
 
   const handleBarHover = useCallback(
-    (event: React.MouseEvent<SVGRectElement>, categoryIdx: number) => {
+    (event: React.PointerEvent<SVGRectElement>, categoryIdx: number) => {
       const svgRect = (event.currentTarget.closest('svg') as SVGSVGElement).getBoundingClientRect()
       const svgX = event.clientX - svgRect.left - m.left
       const svgY = event.clientY - svgRect.top - m.top
@@ -140,12 +140,12 @@ export function BarChart({
       ref={containerRef}
       className={className}
       style={{ width: '100%', ...style }}
-      onMouseLeave={handleMouseLeave}
+      onPointerLeave={handlePointerLeave}
     >
       <svg
         width={width}
         height={height}
-        style={{ display: 'block', overflow: 'visible' }}
+        style={{ display: 'block', overflow: 'visible', touchAction: 'none' }}
       >
         <g transform={`translate(${m.left},${m.top})`}>
           <YAxis
@@ -187,7 +187,7 @@ export function BarChart({
                           transition: 'y var(--fc-transition-slow, 400ms ease), height var(--fc-transition-slow, 400ms ease)',
                           cursor: 'crosshair',
                         }}
-                        onMouseMove={(e) => handleBarHover(e, di)}
+                        onPointerMove={(e) => handleBarHover(e, di)}
                       />
                     )
                   })}
@@ -198,7 +198,7 @@ export function BarChart({
                     width={xScale.bandwidth()}
                     height={innerH}
                     fill="transparent"
-                    onMouseMove={(e) => handleBarHover(e, di)}
+                    onPointerMove={(e) => handleBarHover(e, di)}
                   />
                 </g>
               )
@@ -227,7 +227,7 @@ export function BarChart({
                       transition: 'y var(--fc-transition-slow, 400ms ease), height var(--fc-transition-slow, 400ms ease)',
                       cursor: 'crosshair',
                     }}
-                    onMouseMove={(e) => handleBarHover(e, di)}
+                    onPointerMove={(e) => handleBarHover(e, di)}
                   />
                 )
               })
