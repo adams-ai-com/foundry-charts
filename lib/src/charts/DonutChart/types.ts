@@ -12,6 +12,8 @@ export type DonutChartProps = {
   centerLabel?: string
   innerRadius?: number
   height?: number
+  onSliceClick?: (datum: DonutDatum, idx: number) => void
+  selectedLabel?: string
   className?: string
   style?: CSSProperties
 }

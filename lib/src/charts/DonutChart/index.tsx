@@ -14,6 +14,8 @@ export function DonutChart({
   centerLabel = 'Total',
   innerRadius: innerRadiusFraction = 0.65,
   height = 280,
+  onSliceClick,
+  selectedLabel,
   className,
   style,
 }: DonutChartProps) {
@@ -85,22 +87,26 @@ export function DonutChart({
         <g transform={`translate(${cx},${cy})`}>
           {arcs.map((a, i) => {
             const midAngle = (a.startAngle + a.endAngle) / 2
-            const tx = hoverIdx === i ? Math.sin(midAngle) * HOVER_OFFSET : 0
-            const ty = hoverIdx === i ? -Math.cos(midAngle) * HOVER_OFFSET : 0
+            const isSelected = selectedLabel !== undefined && selectedLabel === data[i].label
+            const isDimmed   = selectedLabel !== undefined && selectedLabel !== data[i].label
+            const pullOut = hoverIdx === i || isSelected
+            const tx = pullOut ? Math.sin(midAngle) * HOVER_OFFSET : 0
+            const ty = pullOut ? -Math.cos(midAngle) * HOVER_OFFSET : 0
 
             return (
               <path
                 key={data[i].label}
                 d={arcGen(a) ?? ''}
                 fill={colors[i]}
-                opacity={mounted ? 1 : 0}
+                opacity={mounted ? (isDimmed ? 0.3 : 1) : 0}
                 transform={`translate(${tx},${ty})`}
                 style={{
                   transition: `opacity 400ms ease ${i * 60}ms, transform 200ms ease`,
-                  cursor: 'pointer',
+                  cursor: onSliceClick ? 'pointer' : 'default',
                 }}
                 onPointerEnter={() => setHoverIdx(i)}
                 onPointerLeave={() => setHoverIdx(null)}
+                onClick={() => onSliceClick?.(data[i], i)}
               />
             )
           })}

@@ -18,6 +18,8 @@ export type BarChartProps = {
   height?: number
   formatY?: (value: number) => string
   formatX?: (value: string) => string
+  onBarClick?: (datum: BarChartDatum, categoryIdx: number) => void
+  selectedKey?: string
   className?: string
   style?: CSSProperties
 }

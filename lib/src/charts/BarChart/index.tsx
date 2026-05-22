@@ -22,6 +22,8 @@ export function BarChart({
   height = 320,
   formatY = formatValue,
   formatX,
+  onBarClick,
+  selectedKey,
   className,
   style,
 }: BarChartProps) {
@@ -163,7 +165,10 @@ export function BarChart({
 
           {variant === 'grouped' && xInner &&
             data.map((d, di) => {
-              const catX = xScale(String(d[xKey])) ?? 0
+              const catKey = String(d[xKey])
+              const catX = xScale(catKey) ?? 0
+              const isSelected = selectedKey !== undefined && selectedKey === catKey
+              const isDimmed  = selectedKey !== undefined && selectedKey !== catKey
               return (
                 <g key={di} transform={`translate(${catX},0)`}>
                   {series.map((s, si) => {
@@ -182,23 +187,26 @@ export function BarChart({
                         height={mounted ? bh : 0}
                         rx={3}
                         fill={color}
-                        opacity={0.9}
+                        opacity={isDimmed ? 0.25 : isSelected ? 1 : 0.9}
                         style={{
-                          transition: 'y var(--fc-transition-slow, 400ms ease), height var(--fc-transition-slow, 400ms ease)',
-                          cursor: 'crosshair',
+                          transition: 'y var(--fc-transition-slow, 400ms ease), height var(--fc-transition-slow, 400ms ease), opacity 200ms ease',
+                          cursor: onBarClick ? 'pointer' : 'crosshair',
                         }}
                         onPointerMove={(e) => handleBarHover(e, di)}
+                        onClick={() => onBarClick?.(d, di)}
                       />
                     )
                   })}
-                  {/* invisible hover target covering full category width */}
+                  {/* invisible hover + click target covering full category width */}
                   <rect
                     x={0}
                     y={0}
                     width={xScale.bandwidth()}
                     height={innerH}
                     fill="transparent"
+                    style={{ cursor: onBarClick ? 'pointer' : 'default' }}
                     onPointerMove={(e) => handleBarHover(e, di)}
+                    onClick={() => onBarClick?.(d, di)}
                   />
                 </g>
               )
@@ -208,12 +216,15 @@ export function BarChart({
             stackedData.map((layer, si) => {
               const color = seriesColors[si]
               return layer.map((seg, di) => {
-                const catX = xScale(String(data[di][xKey])) ?? 0
+                const catKey = String(data[di][xKey])
+                const catX = xScale(catKey) ?? 0
                 const bw = xScale.bandwidth()
                 const y0 = yScale(seg[1])
                 const y1 = yScale(seg[0])
                 const by = Math.min(y0, y1)
                 const bh = Math.abs(y1 - y0)
+                const isDimmed  = selectedKey !== undefined && selectedKey !== catKey
+                const isSelected = selectedKey !== undefined && selectedKey === catKey
                 return (
                   <rect
                     key={`${si}-${di}`}
@@ -222,12 +233,13 @@ export function BarChart({
                     width={bw}
                     height={mounted ? bh : 0}
                     fill={color}
-                    opacity={0.9}
+                    opacity={isDimmed ? 0.25 : isSelected ? 1 : 0.9}
                     style={{
-                      transition: 'y var(--fc-transition-slow, 400ms ease), height var(--fc-transition-slow, 400ms ease)',
-                      cursor: 'crosshair',
+                      transition: 'y var(--fc-transition-slow, 400ms ease), height var(--fc-transition-slow, 400ms ease), opacity 200ms ease',
+                      cursor: onBarClick ? 'pointer' : 'crosshair',
                     }}
                     onPointerMove={(e) => handleBarHover(e, di)}
+                    onClick={() => onBarClick?.(data[di], di)}
                   />
                 )
               })
