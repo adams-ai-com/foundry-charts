@@ -9,6 +9,7 @@ const charts = [
   { href: '/docs/charts/bar-chart', label: 'Bar Chart' },
   { href: '/docs/charts/line-chart', label: 'Line Chart' },
   { href: '/docs/charts/metric-card', label: 'Metric Card' },
+  { href: '/docs/charts/donut-chart', label: 'Donut Chart' },
 ]
 
 export function DocsNav() {
