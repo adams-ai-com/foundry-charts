@@ -7,6 +7,7 @@ import {
   LineChart,
   DonutChart,
   MetricCard,
+  WaterfallChart,
   formatCurrency,
 } from 'foundry-charts'
 
@@ -308,11 +309,68 @@ function Operations() {
   )
 }
 
+// ─── Inventory data ───────────────────────────────────────────────────────────
+
+const inventoryBridge = [
+  { label: 'Starting',      value: 245, type: 'total' as const },
+  { label: 'New Units In',  value: 48 },
+  { label: 'Trade-Ins',     value: 15 },
+  { label: 'Units Sold',    value: -62 },
+  { label: 'Aged Out >90d', value: -12 },
+  { label: 'Ending',        value: 234, type: 'total' as const },
+]
+
+const cashBridge = [
+  { label: 'Opening Cash',  value: 820000, type: 'total' as const },
+  { label: 'Collections',   value: 310000 },
+  { label: 'Parts Revenue', value: 94000 },
+  { label: 'Payroll',       value: -187000 },
+  { label: 'Inventory Buy', value: -240000 },
+  { label: 'Overhead',      value: -56000 },
+  { label: 'Closing Cash',  value: 741000, type: 'total' as const },
+]
+
+const invSparks = {
+  units:    [231, 238, 242, 245, 248, 234],
+  sold:     [58,  61,  55,  68,  62,  62],
+  aged:     [18,  15,  14,  16,  13,  12],
+  turnover: [28,  26,  27,  24,  25,  25],
+}
+
+function Inventory() {
+  return (
+    <div>
+      <DashboardHeader
+        title="Inventory"
+        subtitle="Unit flow, aging, and cash position for the current period"
+        range="June 2025"
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 20 }}>
+        <MetricCard label="Units on Lot"     value="234"  trend={-4.5}  trendLabel="vs May" sparkline={invSparks.units} />
+        <MetricCard label="Units Sold"       value="62"   trend={0}     trendLabel="vs May" sparkline={invSparks.sold} />
+        <MetricCard label="Aged > 90 Days"   value="12"   trend={-7.7}  trendLabel="vs May" sparkline={invSparks.aged} />
+        <MetricCard label="Avg Days to Turn" value="25"   trend={0}     trendLabel="vs May" sparkline={invSparks.turnover} />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 16 }} className="fc-examples-chart-row">
+        <ChartCard title="Inventory Bridge" subtitle="Unit flow this period">
+          <WaterfallChart data={inventoryBridge} height={280} />
+        </ChartCard>
+        <ChartCard title="Cash Flow Bridge" subtitle="Period cash movement" style={{}}>
+          <WaterfallChart data={cashBridge} height={280} formatValue={formatCurrency} />
+        </ChartCard>
+      </div>
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 const TABS = [
   { id: 'revenue',    label: 'Revenue Overview', component: RevenueOverview },
   { id: 'operations', label: 'Operations',        component: Operations },
+  { id: 'inventory',  label: 'Inventory',         component: Inventory },
 ]
 
 export default function ExamplesPage() {
