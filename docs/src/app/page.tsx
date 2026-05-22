@@ -130,7 +130,7 @@ export default function Home() {
               Examples
             </Link>
             <a
-              href="https://github.com/adams-ai/foundry-charts"
+              href="https://github.com/adams-ai-com/foundry-charts"
               style={{
                 padding: '6px 12px',
                 fontSize: 13,
@@ -227,7 +227,7 @@ export default function Home() {
             Explore docs →
           </Link>
           <a
-            href="https://github.com/adams-ai/foundry-charts"
+            href="https://github.com/adams-ai-com/foundry-charts"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -422,7 +422,7 @@ export default function Home() {
           <div style={{ display: 'flex', gap: 20 }}>
             {[
               { label: 'Docs', href: '/docs/charts/bar-chart' },
-              { label: 'GitHub', href: 'https://github.com/adams-ai/foundry-charts' },
+              { label: 'GitHub', href: 'https://github.com/adams-ai-com/foundry-charts' },
             ].map((l) => (
               <a
                 key={l.label}
