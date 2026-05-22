@@ -6,10 +6,12 @@ import { useState } from 'react'
 import { useIsMobile } from '@/hooks/useIsMobile'
 
 const charts = [
-  { href: '/docs/charts/bar-chart', label: 'Bar Chart' },
-  { href: '/docs/charts/line-chart', label: 'Line Chart' },
-  { href: '/docs/charts/donut-chart', label: 'Donut Chart' },
-  { href: '/docs/charts/metric-card', label: 'Metric Card' },
+  { href: '/docs/charts/bar-chart',       label: 'Bar Chart' },
+  { href: '/docs/charts/line-chart',      label: 'Line Chart' },
+  { href: '/docs/charts/area-chart',      label: 'Area Chart' },
+  { href: '/docs/charts/donut-chart',     label: 'Donut Chart' },
+  { href: '/docs/charts/scatter-chart',   label: 'Scatter Chart' },
+  { href: '/docs/charts/metric-card',     label: 'Metric Card' },
   { href: '/docs/charts/waterfall-chart', label: 'Waterfall Chart' },
 ]
 

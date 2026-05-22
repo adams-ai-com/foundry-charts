@@ -5,10 +5,13 @@ import { useState } from 'react'
 import {
   BarChart,
   LineChart,
+  AreaChart,
   DonutChart,
+  ScatterChart,
   MetricCard,
   WaterfallChart,
   formatCurrency,
+  formatPercent,
 } from 'foundry-charts'
 
 // ─── Revenue Overview data ────────────────────────────────────────────────────
@@ -40,6 +43,49 @@ const revenueSeries = [
   { key: 'services', label: 'Services' },
   { key: 'support',  label: 'Support' },
 ]
+
+// ─── Deal performance data (scatter) ─────────────────────────────────────────
+
+const dealScatter = [
+  {
+    key: 'New', label: 'New Units',
+    data: [
+      { x: 12, y: 4200 }, { x: 8,  y: 5100 }, { x: 22, y: 3800 },
+      { x: 5,  y: 6200 }, { x: 31, y: 2900 }, { x: 18, y: 4700 },
+      { x: 44, y: 2100 }, { x: 9,  y: 5400 }, { x: 27, y: 3500 },
+    ],
+  },
+  {
+    key: 'Used', label: 'Used Units',
+    data: [
+      { x: 38, y: 1800 }, { x: 52, y: 1200 }, { x: 19, y: 2800 },
+      { x: 61, y: 900  }, { x: 29, y: 2300 }, { x: 41, y: 1600 },
+      { x: 11, y: 3100 }, { x: 55, y: 1100 }, { x: 33, y: 2000 },
+    ],
+  },
+]
+
+const areaRevenueData = [
+  { month: 'Jan', software: 22600, services: 15400, support: 3200 },
+  { month: 'Feb', software: 24100, services: 16300, support: 3400 },
+  { month: 'Mar', software: 21800, services: 14800, support: 3500 },
+  { month: 'Apr', software: 25400, services: 17200, support: 3600 },
+  { month: 'May', software: 23700, services: 16800, support: 4400 },
+  { month: 'Jun', software: 28000, services: 19000, support: 4200 },
+]
+
+const areaRevenueSeries = [
+  { key: 'software', label: 'Software' },
+  { key: 'services', label: 'Services' },
+  { key: 'support',  label: 'Support' },
+]
+
+const dealSparks = {
+  gross:   [3800, 4100, 3600, 4500, 4200, 4700],
+  volume:  [58,   61,   55,   68,   62,   64],
+  aged:    [18,   15,   14,   16,   13,   12],
+  avgDays: [28,   26,   27,   24,   25,   22],
+}
 
 // ─── Operations data ──────────────────────────────────────────────────────────
 
@@ -309,6 +355,50 @@ function Operations() {
   )
 }
 
+// ─── Deal Performance example ────────────────────────────────────────────────
+
+function DealPerformance() {
+  return (
+    <div>
+      <DashboardHeader
+        title="Deal Performance"
+        subtitle="Gross profit vs. days on lot, plus revenue mix over time"
+        range="Jan – Jun 2025"
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 20 }}>
+        <MetricCard label="Avg Gross / Deal" value={4700} formatValue={formatCurrency} trend={11.9} trendLabel="vs May" sparkline={dealSparks.gross} />
+        <MetricCard label="Units Sold"       value="64"                                trend={3.2}  trendLabel="vs May" sparkline={dealSparks.volume} />
+        <MetricCard label="Aged > 90 Days"   value="12"                                trend={-7.7} trendLabel="vs May" sparkline={dealSparks.aged} />
+        <MetricCard label="Avg Days to Turn" value="22"                                trend={-12}  trendLabel="vs May" sparkline={dealSparks.avgDays} />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 16 }} className="fc-examples-chart-row">
+        <ChartCard title="Gross vs. Days on Lot" subtitle="New vs. used — scatter by unit">
+          <ScatterChart
+            series={dealScatter}
+            height={280}
+            xLabel="Days on Lot"
+            yLabel="Gross Profit"
+            formatY={formatCurrency}
+            quadrants={[{ axis: 'x', value: 30, label: '30d threshold' }]}
+          />
+        </ChartCard>
+        <ChartCard title="Revenue Mix Over Time" subtitle="Stacked by product line">
+          <AreaChart
+            data={areaRevenueData}
+            series={areaRevenueSeries}
+            xKey="month"
+            variant="stacked"
+            height={280}
+            formatY={formatCurrency}
+          />
+        </ChartCard>
+      </div>
+    </div>
+  )
+}
+
 // ─── Inventory data ───────────────────────────────────────────────────────────
 
 const inventoryBridge = [
@@ -368,9 +458,10 @@ function Inventory() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 const TABS = [
-  { id: 'revenue',    label: 'Revenue Overview', component: RevenueOverview },
-  { id: 'operations', label: 'Operations',        component: Operations },
-  { id: 'inventory',  label: 'Inventory',         component: Inventory },
+  { id: 'revenue',     label: 'Revenue Overview', component: RevenueOverview },
+  { id: 'operations',  label: 'Operations',        component: Operations },
+  { id: 'inventory',   label: 'Inventory',         component: Inventory },
+  { id: 'deals',       label: 'Deal Performance',  component: DealPerformance },
 ]
 
 export default function ExamplesPage() {
