@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+
 export type SeriesConfig = {
   key: string
   label: string
@@ -17,5 +19,5 @@ export type BarChartProps = {
   formatY?: (value: number) => string
   formatX?: (value: string) => string
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
 }

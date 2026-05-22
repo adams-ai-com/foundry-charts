@@ -1,55 +1,47 @@
 'use client'
 
 import { useState } from 'react'
-import { BarChart } from 'foundry-charts'
+import { LineChart } from 'foundry-charts'
 import { formatCurrency } from 'foundry-charts'
-import { Nav } from '@/components/Nav'
+import { DocsNav } from '@/components/DocsNav'
 
-const groupedData = [
-  { month: 'Jan', new: 42, used: 31, service: 18 },
-  { month: 'Feb', new: 55, used: 27, service: 22 },
-  { month: 'Mar', new: 48, used: 35, service: 20 },
-  { month: 'Apr', new: 61, used: 29, service: 25 },
-  { month: 'May', new: 53, used: 38, service: 19 },
-  { month: 'Jun', new: 67, used: 33, service: 28 },
+const monthlyRevenue = [
+  { month: 'Jan', revenue: 42000, target: 38000 },
+  { month: 'Feb', revenue: 55000, target: 42000 },
+  { month: 'Mar', revenue: 48000, target: 45000 },
+  { month: 'Apr', revenue: 61000, target: 50000 },
+  { month: 'May', revenue: 53000, target: 52000 },
+  { month: 'Jun', revenue: 67000, target: 55000 },
+  { month: 'Jul', revenue: 72000, target: 58000 },
+  { month: 'Aug', revenue: 69000, target: 62000 },
 ]
 
-const stackedData = [
-  { month: 'Jan', parts: 28000, labor: 19000, sublet: 4200 },
-  { month: 'Feb', parts: 31000, labor: 22000, sublet: 3800 },
-  { month: 'Mar', parts: 27000, labor: 18500, sublet: 5100 },
-  { month: 'Apr', parts: 35000, labor: 24000, sublet: 4600 },
-  { month: 'May', parts: 29000, labor: 21000, sublet: 3900 },
-  { month: 'Jun', parts: 38000, labor: 26000, sublet: 5800 },
+const areaData = [
+  { month: 'Jan', parts: 28000, labor: 19000 },
+  { month: 'Feb', parts: 31000, labor: 22000 },
+  { month: 'Mar', parts: 27000, labor: 18500 },
+  { month: 'Apr', parts: 35000, labor: 24000 },
+  { month: 'May', parts: 29000, labor: 21000 },
+  { month: 'Jun', parts: 38000, labor: 26000 },
+  { month: 'Jul', parts: 41000, labor: 29000 },
+  { month: 'Aug', parts: 36000, labor: 24500 },
 ]
 
-const negativeData = [
-  { month: 'Jan', profit: 12400, loss: -3200 },
-  { month: 'Feb', profit: 18200, loss: -1800 },
-  { month: 'Mar', profit: 9100, loss: -6400 },
-  { month: 'Apr', profit: 21300, loss: -2100 },
-  { month: 'May', profit: 15700, loss: -4300 },
-  { month: 'Jun', profit: 24100, loss: -1600 },
+const singleSeries = [
+  { key: 'revenue', label: 'Revenue' },
 ]
 
-const salesSeries = [
-  { key: 'new', label: 'New Units' },
-  { key: 'used', label: 'Used Units' },
-  { key: 'service', label: 'Service' },
+const twoSeries = [
+  { key: 'revenue', label: 'Revenue' },
+  { key: 'target', label: 'Target' },
 ]
 
-const revSeries = [
+const areaSeries = [
   { key: 'parts', label: 'Parts' },
   { key: 'labor', label: 'Labor' },
-  { key: 'sublet', label: 'Sublet' },
 ]
 
-const pnlSeries = [
-  { key: 'profit', label: 'Gross Profit' },
-  { key: 'loss', label: 'Losses' },
-]
-
-type Example = 'grouped' | 'stacked' | 'negative'
+type Example = 'line' | 'area' | 'multi'
 
 function CodeBlock({ code }: { code: string }) {
   return (
@@ -90,37 +82,37 @@ function PropRow({ name, type, def, desc }: { name: string; type: string; def?: 
   )
 }
 
-export default function BarChartPage() {
-  const [active, setActive] = useState<Example>('grouped')
+export default function LineChartPage() {
+  const [active, setActive] = useState<Example>('line')
 
   const tabs: { id: Example; label: string }[] = [
-    { id: 'grouped', label: 'Grouped' },
-    { id: 'stacked', label: 'Stacked' },
-    { id: 'negative', label: 'Negative values' },
+    { id: 'line', label: 'Line' },
+    { id: 'area', label: 'Area' },
+    { id: 'multi', label: 'Multi-series' },
   ]
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Nav />
+    <div className="fc-docs-layout">
+      <DocsNav />
 
-      <div style={{ flex: 1, overflowY: 'auto' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', padding: '48px 40px 96px' }}>
+      <div className="fc-docs-content">
+        <div className="fc-docs-inner">
           {/* Header */}
           <div style={{ marginBottom: 48 }}>
             <div style={{ fontSize: 12, color: 'rgba(240,240,245,0.3)', marginBottom: 10, letterSpacing: '0.04em', textTransform: 'uppercase', fontWeight: 600 }}>
               Charts
             </div>
             <h1 style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-0.03em', color: '#f0f0f5', marginBottom: 12 }}>
-              Bar Chart
+              Line Chart
             </h1>
             <p style={{ fontSize: 15, color: 'rgba(240,240,245,0.5)', lineHeight: 1.65, maxWidth: 520 }}>
-              Grouped, stacked, and negative-value variants. Built with D3 scales,
-              animated on mount, responsive by default.
+              Line and area variants. Multi-series with hover tooltips and animated
+              mount. Built with D3 scales and Catmull-Rom smooth curves.
             </p>
           </div>
 
           {/* Tabs */}
-          <div style={{ display: 'flex', gap: 4, marginBottom: 0, borderBottom: '1px solid rgba(255,255,255,0.07)', paddingBottom: 0 }}>
+          <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid rgba(255,255,255,0.07)', paddingBottom: 0 }}>
             {tabs.map((t) => (
               <button
                 key={t.id}
@@ -155,98 +147,91 @@ export default function BarChartPage() {
               marginBottom: 32,
             }}
           >
-            {active === 'grouped' && (
-              <BarChart
-                data={groupedData}
-                series={salesSeries}
+            {active === 'line' && (
+              <LineChart
+                data={monthlyRevenue}
+                series={singleSeries}
                 xKey="month"
-                variant="grouped"
-                height={300}
-              />
-            )}
-            {active === 'stacked' && (
-              <BarChart
-                data={stackedData}
-                series={revSeries}
-                xKey="month"
-                variant="stacked"
+                variant="line"
                 height={300}
                 formatY={formatCurrency}
               />
             )}
-            {active === 'negative' && (
-              <BarChart
-                data={negativeData}
-                series={pnlSeries}
+            {active === 'area' && (
+              <LineChart
+                data={areaData}
+                series={areaSeries}
                 xKey="month"
-                variant="grouped"
+                variant="area"
+                height={300}
+                formatY={formatCurrency}
+              />
+            )}
+            {active === 'multi' && (
+              <LineChart
+                data={monthlyRevenue}
+                series={twoSeries}
+                xKey="month"
+                variant="line"
                 height={300}
                 formatY={formatCurrency}
               />
             )}
           </div>
 
-          {/* Code example */}
+          {/* Code */}
           <h2 style={{ fontSize: 18, fontWeight: 700, color: '#f0f0f5', marginBottom: 14, letterSpacing: '-0.02em' }}>
             Usage
           </h2>
 
-          {active === 'grouped' && (
-            <CodeBlock code={`import { BarChart } from 'foundry-charts'
+          {active === 'line' && (
+            <CodeBlock code={`import { LineChart, formatCurrency } from 'foundry-charts'
 
-const data = [
-  { month: 'Jan', new: 42, used: 31, service: 18 },
-  { month: 'Feb', new: 55, used: 27, service: 22 },
-  // ...
-]
-
-const series = [
-  { key: 'new', label: 'New Units' },
-  { key: 'used', label: 'Used Units' },
-  { key: 'service', label: 'Service' },
-]
-
-<BarChart
-  data={data}
-  series={series}
-  xKey="month"
-  variant="grouped"
-  height={300}
-/>`} />
-          )}
-
-          {active === 'stacked' && (
-            <CodeBlock code={`import { BarChart, formatCurrency } from 'foundry-charts'
-
-<BarChart
-  data={data}
-  series={[
-    { key: 'parts', label: 'Parts' },
-    { key: 'labor', label: 'Labor' },
-    { key: 'sublet', label: 'Sublet' },
+<LineChart
+  data={[
+    { month: 'Jan', revenue: 42000 },
+    { month: 'Feb', revenue: 55000 },
+    // ...
   ]}
+  series={[{ key: 'revenue', label: 'Revenue' }]}
   xKey="month"
-  variant="stacked"
-  height={300}
+  variant="line"
   formatY={formatCurrency}
 />`} />
           )}
 
-          {active === 'negative' && (
-            <CodeBlock code={`import { BarChart, formatCurrency } from 'foundry-charts'
+          {active === 'area' && (
+            <CodeBlock code={`import { LineChart, formatCurrency } from 'foundry-charts'
 
-// Negative values extend below the zero line automatically.
-// No configuration needed — the y scale adjusts.
+// variant="area" adds a gradient fill under each line.
+// Works the same as "line" — just change the prop.
 
-<BarChart
+<LineChart
   data={data}
   series={[
-    { key: 'profit', label: 'Gross Profit' },
-    { key: 'loss', label: 'Losses' },
+    { key: 'parts', label: 'Parts' },
+    { key: 'labor', label: 'Labor' },
   ]}
   xKey="month"
-  variant="grouped"
-  height={300}
+  variant="area"
+  formatY={formatCurrency}
+/>`} />
+          )}
+
+          {active === 'multi' && (
+            <CodeBlock code={`import { LineChart, formatCurrency } from 'foundry-charts'
+
+// Multiple series share the same x-axis.
+// Each gets a distinct color from the default palette.
+
+<LineChart
+  data={data}
+  series={[
+    { key: 'revenue', label: 'Revenue' },
+    { key: 'target',  label: 'Target' },
+  ]}
+  xKey="month"
+  variant="line"
   formatY={formatCurrency}
 />`} />
           )}
@@ -280,37 +265,16 @@ const series = [
                 </tr>
               </thead>
               <tbody>
-                <PropRow name="data" type="BarChartDatum[]" desc="Array of data objects. Each object represents one x-axis category." />
+                <PropRow name="data" type="LineChartDatum[]" desc="Array of data objects. Each object represents one x-axis point." />
                 <PropRow name="series" type="SeriesConfig[]" desc="Which keys to plot. Each entry has key, label, and optional color." />
                 <PropRow name="xKey" type="string" desc="The key in each datum that provides the x-axis label." />
-                <PropRow name="variant" type="'grouped' | 'stacked'" def="'grouped'" desc="Layout variant." />
+                <PropRow name="variant" type="'line' | 'area'" def="'line'" desc="Line only, or line with gradient fill below it." />
+                <PropRow name="curve" type="'smooth' | 'linear'" def="'smooth'" desc="Catmull-Rom smooth curves or straight line segments." />
                 <PropRow name="height" type="number" def="320" desc="Chart height in pixels. Width is always 100% of the container." />
-                <PropRow name="formatY" type="(v: number) => string" def="formatValue" desc="Formatter for y-axis tick labels and tooltip values." />
+                <PropRow name="formatY" type="(v: number) => string" def="formatValue" desc="Formatter for y-axis ticks and tooltip values." />
                 <PropRow name="formatX" type="(v: string) => string" desc="Optional formatter for x-axis tick labels." />
                 <PropRow name="className" type="string" desc="Additional CSS class on the root element." />
                 <PropRow name="style" type="CSSProperties" desc="Inline styles on the root element." />
-              </tbody>
-            </table>
-          </div>
-
-          <h2 style={{ fontSize: 18, fontWeight: 700, color: '#f0f0f5', marginTop: 40, marginBottom: 14, letterSpacing: '-0.02em' }}>
-            SeriesConfig
-          </h2>
-          <div style={{ border: '1px solid rgba(255,255,255,0.07)', borderRadius: 8, overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ background: 'rgba(255,255,255,0.03)' }}>
-                  {['Prop', 'Type', 'Default', 'Description'].map((h) => (
-                    <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(240,240,245,0.3)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <PropRow name="key" type="string" desc="Key in the data object to read values from." />
-                <PropRow name="label" type="string" desc="Human-readable label for legend and tooltip." />
-                <PropRow name="color" type="string" desc="Override the default series color. Any valid CSS color." />
               </tbody>
             </table>
           </div>
