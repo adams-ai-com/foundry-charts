@@ -87,6 +87,148 @@ const dealSparks = {
   avgDays: [28,   26,   27,   24,   25,   22],
 }
 
+// ─── Service Department data ─────────────────────────────────────────────────
+
+const serviceSparks = {
+  ros:       [2840, 3100, 2760, 3380, 3210, 3540],
+  labor:     [74.1, 76.3, 72.8, 79.2, 77.4, 81.6],
+  csi:       [88,   90,   87,   91,   89,   93],
+  comebacks: [14,   12,   16,   11,   13,   9],
+}
+
+const laborMix = [
+  { label: 'Warranty',    value: 31, color: '#3b82f6' },
+  { label: 'Customer Pay',value: 48, color: '#10b981' },
+  { label: 'Internal',    value: 12, color: '#8b5cf6' },
+  { label: 'Sublet',      value: 9,  color: '#f59e0b' },
+]
+
+const techPerformance = [
+  {
+    key: 'Senior', label: 'Senior Tech',
+    data: [
+      { x: 112, y: 94.2, z: 48, label: 'J. Torres' },
+      { x: 98,  y: 88.7, z: 41, label: 'M. Reyes' },
+      { x: 124, y: 91.3, z: 52, label: 'D. Kim' },
+      { x: 105, y: 96.1, z: 44, label: 'P. Nguyen' },
+    ],
+  },
+  {
+    key: 'Junior', label: 'Junior Tech',
+    data: [
+      { x: 74,  y: 78.4, z: 31, label: 'A. Smith' },
+      { x: 81,  y: 82.1, z: 34, label: 'C. Brown' },
+      { x: 68,  y: 74.9, z: 28, label: 'R. Davis' },
+      { x: 88,  y: 85.3, z: 37, label: 'T. Wilson' },
+    ],
+  },
+]
+
+const roTrend = [
+  { month: 'Jan', warranty: 182, customerPay: 241, internal: 68 },
+  { month: 'Feb', warranty: 194, customerPay: 268, internal: 72 },
+  { month: 'Mar', warranty: 171, customerPay: 229, internal: 61 },
+  { month: 'Apr', warranty: 208, customerPay: 294, internal: 81 },
+  { month: 'May', warranty: 196, customerPay: 278, internal: 74 },
+  { month: 'Jun', warranty: 221, customerPay: 312, internal: 88 },
+]
+
+const roSeries = [
+  { key: 'customerPay', label: 'Customer Pay' },
+  { key: 'warranty',    label: 'Warranty' },
+  { key: 'internal',    label: 'Internal' },
+]
+
+// ─── HR & Headcount data ─────────────────────────────────────────────────────
+
+const hrSparks = {
+  headcount: [142, 144, 143, 147, 146, 149],
+  attrition: [3.1, 2.8, 3.4, 2.6, 2.9, 2.4],
+  openRoles:  [8,   9,   11,  7,   8,   6],
+  avgTenure:  [3.2, 3.3, 3.2, 3.4, 3.4, 3.5],
+}
+
+const headcountByDept = [
+  { dept: 'Sales',    q1: 38, q2: 41 },
+  { dept: 'Service',  q1: 52, q2: 54 },
+  { dept: 'Parts',    q1: 21, q2: 22 },
+  { dept: 'Finance',  q1: 14, q2: 15 },
+  { dept: 'Admin',    q1: 17, q2: 17 },
+]
+
+const headcountSeries = [
+  { key: 'q1', label: 'Q1 2025' },
+  { key: 'q2', label: 'Q2 2025' },
+]
+
+const headcountBridge = [
+  { label: 'Q1 Close',  value: 142, type: 'total' as const },
+  { label: 'New Hires', value: 18 },
+  { label: 'Rehires',   value: 4 },
+  { label: 'Voluntary', value: -9 },
+  { label: 'Involuntary',value: -4 },
+  { label: 'Transfers', value: -2 },
+  { label: 'Q2 Close',  value: 149, type: 'total' as const },
+]
+
+const compensationTrend = [
+  { month: 'Jan', base: 610000, overtime: 48000, bonus: 22000 },
+  { month: 'Feb', base: 618000, overtime: 51000, bonus: 18000 },
+  { month: 'Mar', base: 615000, overtime: 44000, bonus: 31000 },
+  { month: 'Apr', base: 631000, overtime: 56000, bonus: 24000 },
+  { month: 'May', base: 628000, overtime: 52000, bonus: 19000 },
+  { month: 'Jun', base: 644000, overtime: 61000, bonus: 28000 },
+]
+
+const compSeries = [
+  { key: 'base',     label: 'Base' },
+  { key: 'overtime', label: 'Overtime' },
+  { key: 'bonus',    label: 'Bonus' },
+]
+
+// ─── Financial Health data ────────────────────────────────────────────────────
+
+const finSparks = {
+  gross:    [18.4, 19.1, 17.8, 20.2, 19.6, 21.3],
+  ebitda:   [8.2,  8.7,  7.9,  9.1,  8.8,  9.4],
+  cashflow: [741,  812,  698,  893,  841,  924],
+  dso:      [38,   35,   41,   33,   36,   31],
+}
+
+const plTrend = [
+  { month: 'Jan', gross: 18.4, ebitda: 8.2, net: 5.1 },
+  { month: 'Feb', gross: 19.1, ebitda: 8.7, net: 5.6 },
+  { month: 'Mar', gross: 17.8, ebitda: 7.9, net: 4.8 },
+  { month: 'Apr', gross: 20.2, ebitda: 9.1, net: 6.1 },
+  { month: 'May', gross: 19.6, ebitda: 8.8, net: 5.8 },
+  { month: 'Jun', gross: 21.3, ebitda: 9.4, net: 6.4 },
+]
+
+const marginSeries = [
+  { key: 'gross',  label: 'Gross Margin %' },
+  { key: 'ebitda', label: 'EBITDA %' },
+  { key: 'net',    label: 'Net %' },
+]
+
+const expenseMix = [
+  { label: 'COGS',      value: 58.2, color: '#ef4444' },
+  { label: 'Labor',     value: 18.1, color: '#f59e0b' },
+  { label: 'Overhead',  value: 9.4,  color: '#8b5cf6' },
+  { label: 'Marketing', value: 4.1,  color: '#3b82f6' },
+  { label: 'Other',     value: 10.2, color: '#6b7280' },
+]
+
+const cashBridgeFin = [
+  { label: 'Opening',     value: 741000,  type: 'total' as const },
+  { label: 'Collections', value: 892000 },
+  { label: 'Other Income',value: 43000 },
+  { label: 'COGS',        value: -518000 },
+  { label: 'Payroll',     value: -241000 },
+  { label: 'Overhead',    value: -87000 },
+  { label: 'CapEx',       value: -62000 },
+  { label: 'Closing',     value: 768000,  type: 'total' as const },
+]
+
 // ─── Operations data ──────────────────────────────────────────────────────────
 
 const opsSparks = {
@@ -455,6 +597,127 @@ function Inventory() {
   )
 }
 
+// ─── Service Department example ───────────────────────────────────────────────
+
+function ServiceDepartment() {
+  return (
+    <div>
+      <DashboardHeader
+        title="Service Department"
+        subtitle="RO volume, labor efficiency, tech performance, and CSI"
+        range="Jan – Jun 2025"
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 20 }}>
+        <MetricCard label="Avg RO Value"    value={3540}   formatValue={formatCurrency} trend={10.3} trendLabel="vs May" sparkline={serviceSparks.ros} />
+        <MetricCard label="Labor Efficiency"value="81.6%"                               trend={5.4}  trendLabel="vs May" sparkline={serviceSparks.labor} />
+        <MetricCard label="CSI Score"       value="93"                                  trend={4.5}  trendLabel="vs May" sparkline={serviceSparks.csi} />
+        <MetricCard label="Comebacks"       value="9"                                   trend={-30.8}trendLabel="vs May" sparkline={serviceSparks.comebacks} />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 16, marginBottom: 16 }} className="fc-examples-chart-row">
+        <ChartCard title="RO Volume by Type" subtitle="Stacked monthly repair orders">
+          <AreaChart data={roTrend} series={roSeries} xKey="month" variant="stacked" height={260} />
+        </ChartCard>
+        <ChartCard title="Labor Mix" subtitle="June breakdown">
+          <DonutChart data={laborMix} centerLabel="Labor Hrs" height={260} />
+        </ChartCard>
+      </div>
+
+      <ChartCard title="Tech Performance" subtitle="Hours flagged vs. efficiency — bubble = ROs written">
+        <ScatterChart
+          series={techPerformance}
+          variant="bubble"
+          height={260}
+          xLabel="Hours Flagged"
+          yLabel="Efficiency %"
+          formatZ={(v) => `${v} ROs`}
+          formatY={(v) => `${v.toFixed(1)}%`}
+          quadrants={[
+            { axis: 'x', value: 100, label: '100hr target' },
+            { axis: 'y', value: 85,  label: '85% efficiency' },
+          ]}
+        />
+      </ChartCard>
+    </div>
+  )
+}
+
+// ─── HR & Headcount example ───────────────────────────────────────────────────
+
+function HRHeadcount() {
+  return (
+    <div>
+      <DashboardHeader
+        title="HR & Headcount"
+        subtitle="Workforce movement, compensation, and attrition"
+        range="Q1 → Q2 2025"
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 20 }}>
+        <MetricCard label="Total Headcount"  value="149"   trend={4.9}  trendLabel="vs Q1" sparkline={hrSparks.headcount} />
+        <MetricCard label="Attrition Rate"   value="2.4%"  trend={-17.2}trendLabel="vs Q1" sparkline={hrSparks.attrition} />
+        <MetricCard label="Open Roles"       value="6"     trend={-25}  trendLabel="vs Q1" sparkline={hrSparks.openRoles} />
+        <MetricCard label="Avg Tenure (yrs)" value="3.5"   trend={2.9}  trendLabel="vs Q1" sparkline={hrSparks.avgTenure} />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 16, marginBottom: 16 }} className="fc-examples-chart-row">
+        <ChartCard title="Headcount Bridge" subtitle="Q1 → Q2 movement">
+          <WaterfallChart data={headcountBridge} height={260} />
+        </ChartCard>
+        <ChartCard title="Headcount by Department" subtitle="Q1 vs Q2">
+          <BarChart data={headcountByDept} series={headcountSeries} xKey="dept" variant="grouped" height={260} />
+        </ChartCard>
+      </div>
+
+      <ChartCard title="Compensation Trend" subtitle="Base, overtime, and bonus — stacked monthly">
+        <AreaChart data={compensationTrend} series={compSeries} xKey="month" variant="stacked" height={260} formatY={formatCurrency} />
+      </ChartCard>
+    </div>
+  )
+}
+
+// ─── Financial Health example ─────────────────────────────────────────────────
+
+function FinancialHealth() {
+  return (
+    <div>
+      <DashboardHeader
+        title="Financial Health"
+        subtitle="Margins, expense mix, and cash position"
+        range="Jan – Jun 2025"
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 20 }}>
+        <MetricCard label="Gross Margin"  value="21.3%"  trend={8.7}  trendLabel="vs May" sparkline={finSparks.gross} />
+        <MetricCard label="EBITDA"        value="9.4%"   trend={6.8}  trendLabel="vs May" sparkline={finSparks.ebitda} />
+        <MetricCard label="Cash Position" value={924000} formatValue={formatCurrency} trend={9.9} trendLabel="vs May" sparkline={finSparks.cashflow} />
+        <MetricCard label="DSO (days)"    value="31"     trend={-13.9}trendLabel="vs May" sparkline={finSparks.dso} />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,2fr) minmax(0,1fr)', gap: 16, marginBottom: 16 }} className="fc-examples-chart-row">
+        <ChartCard title="Margin Trends" subtitle="Gross, EBITDA, and net — overlapping">
+          <AreaChart
+            data={plTrend}
+            series={marginSeries}
+            xKey="month"
+            variant="overlapping"
+            height={260}
+            formatY={(v) => formatPercent(v, 1)}
+          />
+        </ChartCard>
+        <ChartCard title="Expense Mix" subtitle="% of revenue">
+          <DonutChart data={expenseMix} centerLabel="Expenses" height={260} formatValue={(v) => `${v}%`} />
+        </ChartCard>
+      </div>
+
+      <ChartCard title="Cash Flow Bridge" subtitle="June — sources and uses">
+        <WaterfallChart data={cashBridgeFin} height={260} formatValue={formatCurrency} />
+      </ChartCard>
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 const TABS = [
@@ -462,6 +725,9 @@ const TABS = [
   { id: 'operations',  label: 'Operations',        component: Operations },
   { id: 'inventory',   label: 'Inventory',         component: Inventory },
   { id: 'deals',       label: 'Deal Performance',  component: DealPerformance },
+  { id: 'service',     label: 'Service Dept',      component: ServiceDepartment },
+  { id: 'hr',          label: 'HR & Headcount',    component: HRHeadcount },
+  { id: 'financial',   label: 'Financial Health',  component: FinancialHealth },
 ]
 
 export default function ExamplesPage() {
