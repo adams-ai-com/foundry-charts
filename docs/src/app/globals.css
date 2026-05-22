@@ -106,7 +106,7 @@ a {
     padding: 24px 20px !important;
   }
 
-  .fc-nav-secondary a:not(:first-child) {
+  .fc-nav-secondary > *:nth-child(n+3) {
     display: none;
   }
 
