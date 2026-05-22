@@ -38,7 +38,7 @@ export function DonutChart({
   }, [])
 
   const colors = data.map((d, i) => getSeriesColor(i, d.color))
-  const total = data.reduce((sum, d) => sum + d.value, 0)
+  const total = parseFloat(data.reduce((sum, d) => sum + d.value, 0).toPrecision(10))
 
   const cx = width / 2
   const cy = height / 2
