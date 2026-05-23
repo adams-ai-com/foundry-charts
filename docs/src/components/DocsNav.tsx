@@ -13,6 +13,8 @@ const charts = [
   { href: '/docs/charts/scatter-chart',   label: 'Scatter Chart' },
   { href: '/docs/charts/metric-card',     label: 'Metric Card' },
   { href: '/docs/charts/waterfall-chart', label: 'Waterfall Chart' },
+  { href: '/docs/charts/gauge-chart',     label: 'Gauge Chart' },
+  { href: '/docs/charts/funnel-chart',    label: 'Funnel Chart' },
 ]
 
 export function DocsNav() {
